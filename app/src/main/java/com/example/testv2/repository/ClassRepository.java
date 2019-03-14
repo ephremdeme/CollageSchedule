@@ -21,19 +21,16 @@ public class ClassRepository {
     private static   ClassRepository instance;
     private static Object LOCK =new Object();
 
-    private  ClassRepository(ClassDao classDao, AppExecutors executors) {
-        this.classDao = classDao;
-        this.executors=executors;
-        executors.diskIO().execute(()->{
-                    mAllWords = this.classDao.getAllClass();
-                });
-
+    private  ClassRepository(Application application) {
+        this.classDao = TestDB.getInstance(application).getClassDao();
+        this.executors=AppExecutors.getInstance();
+        mAllWords=classDao.getAllClass();
     }
 
-    public static ClassRepository getInstance( ClassDao classDao, AppExecutors executors){
+    public static ClassRepository getInstance( Application application){
         if (instance ==null){
             synchronized (LOCK){
-                instance=new ClassRepository(classDao, executors);
+                instance=new ClassRepository(application);
                 return instance;
             }
         }

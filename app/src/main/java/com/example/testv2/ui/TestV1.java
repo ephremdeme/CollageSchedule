@@ -13,14 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.testv2.AppExecutors;
 import com.example.testv2.database.TestDB;
+import com.example.testv2.model.ClassEntry;
 import com.example.testv2.repository.ClassRepository;
 import com.example.testv2.viewModel.ClassViewModel;
 import com.example.testv2.R;
 import com.example.testv2.adapter.ClassAdapter;
-import com.example.testv2.model.ClassEntry;
-import com.example.testv2.viewModel.ClassViewModelFactory;
 
 import java.util.List;
 
@@ -31,6 +29,8 @@ import java.util.List;
 public class TestV1 extends Fragment {
 
     ClassViewModel viewModel;
+    TestDB testDB;
+    ClassRepository repository;
 
     public TestV1() {
         // Required empty public constructor
@@ -45,28 +45,22 @@ public class TestV1 extends Fragment {
 
         RecyclerView recyclerView=view.findViewById(R.id.recyclerView);
 
+        testDB=TestDB.getInstance(getContext());
+
         final ClassAdapter classAdapter=new ClassAdapter(getContext());
 
         recyclerView.setAdapter(classAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        ClassViewModelFactory factory=new ClassViewModelFactory(ClassRepository.getInstance(TestDB.getInstance(getContext()).getClassDao(), AppExecutors.getInstance()));
-        if (factory==null)
-            System.out.println("nulllllll factory");
-
-
-
-        viewModel= ViewModelProviders.of(this, factory).get(ClassViewModel.class);
-        if (viewModel==null)
-            System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhh");
+        viewModel= ViewModelProviders.of(this).get(ClassViewModel.class);
+        System.out.println(testDB.getClassDao().getAllClass().getValue()+ "test classs");
         viewModel.getmAllClass().observe(this, new Observer<List<ClassEntry>>() {
             @Override
             public void onChanged(List<ClassEntry> classEntries) {
                 classAdapter.setmClassList(classEntries);
             }
         });
-
         return view;
     }
 

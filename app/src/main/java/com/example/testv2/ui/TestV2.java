@@ -13,14 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.testv2.AppExecutors;
 import com.example.testv2.R;
 import com.example.testv2.adapter.TaskAdapter;
 import com.example.testv2.database.TestDB;
 import com.example.testv2.model.Task;
-import com.example.testv2.repository.TaskRepository;
 import com.example.testv2.viewModel.TaskViewModel;
-import com.example.testv2.viewModel.TaskViewModelFactory;
 
 import java.util.List;
 
@@ -29,6 +26,8 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class TestV2 extends Fragment {
+
+    TestDB testDB;
 
 
     public TestV2() {
@@ -46,12 +45,20 @@ public class TestV2 extends Fragment {
         TaskAdapter adapter=new TaskAdapter(getContext());
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        TaskViewModelFactory factory=new TaskViewModelFactory(TaskRepository.getInstance(TestDB.getInstance(getContext()).getTaskDao(), AppExecutors.getInstance()));
 
-        TaskViewModel viewModel= ViewModelProviders.of(this, factory).get(TaskViewModel.class);
-        viewModel.getAllTask().observe(this, tasks -> adapter.setAllTask(tasks));
+        TaskViewModel viewModel= ViewModelProviders.of(this).get(TaskViewModel.class);
+        System.out.println(viewModel.repository.getAllTask()+"from view");
+        //viewModel.initialize();
+        viewModel.getAllTask().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                adapter.setAllTask(tasks);
+                System.out.println(tasks.size() +"from ob");
+            }
+        });
+
         return root;
     }
 

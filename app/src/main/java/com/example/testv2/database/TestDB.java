@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.testv2.dao.ClassDao;
-import com.example.testv2.dao.ExamDao;
 import com.example.testv2.dao.TaskDao;
 import com.example.testv2.model.ClassEntry;
 import com.example.testv2.model.Exam;
@@ -41,6 +40,12 @@ public abstract class TestDB extends RoomDatabase {
                     super.onOpen(db);
                     new PopulateDbAsync(testV1).execute();
                 }
+
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                    new PopulateDbAsync(testV1).execute();
+                }
             };
 
     public abstract TaskDao getTaskDao();
@@ -50,18 +55,20 @@ public abstract class TestDB extends RoomDatabase {
 
  class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-    private final ClassDao mDao;
+    private final TaskDao taskDao;
 
     PopulateDbAsync(TestDB db) {
-        mDao = db.getClassDao();
+        taskDao = db.getTaskDao();
     }
 
     @Override
     protected Void doInBackground(final Void... params) {
-        ClassEntry classEntry=new ClassEntry("subject1", "rooom11", null, false, null, null, null);
-        mDao.insert(classEntry);
-        classEntry=new ClassEntry("subject122", "rooom1122", null, false, null, null, null);
-        mDao.insert(classEntry);
+
+        Task classEntry=new Task("subject1", 2, "subject detail", null, null);
+        taskDao.insert(classEntry);
+        classEntry=new Task("subject1", 2, "subject detail", null, null);
+        taskDao.insert(classEntry);
+        System.out.println("success inserting ");
         return null;
     }
 }

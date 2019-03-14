@@ -29,4 +29,7 @@ public interface TaskDao {
     @Query("delete from task")
     void deleteAll();
 
+    @Query("select count(*) from task")
+    int count();
+
 }

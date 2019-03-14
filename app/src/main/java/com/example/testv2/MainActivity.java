@@ -7,16 +7,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.testv2.adapter.PagerAdaptor;
+import com.example.testv2.database.TestDB;
+import com.example.testv2.model.Task;
 import com.example.testv2.viewModel.ClassViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity
@@ -35,6 +40,8 @@ public class MainActivity extends AppCompatActivity
 
         viewPager=findViewById(R.id.pager);
 
+        TestDB testDB=TestDB.getInstance(this);
+        AppExecutors executors=AppExecutors.getInstance();
 
 
         final PagerAdaptor adaptor=new PagerAdaptor(getSupportFragmentManager(), 3);

@@ -1,9 +1,11 @@
 package com.example.testv2.repository;
 
+import android.app.Application;
+import android.util.Log;
+
 import com.example.testv2.AppExecutors;
 
-import com.example.testv2.dao.TaskDao;
-import com.example.testv2.model.Exam;
+import com.example.testv2.database.TestDB;
 import com.example.testv2.model.Task;
 
 import java.util.List;
@@ -20,19 +22,15 @@ public class TaskRepository {
     private static   TaskRepository instance;
     private static Object LOCK =new Object();
 
-    private  TaskRepository(TaskDao TaskDao, AppExecutors executors) {
-        this.taskDao = TaskDao;
-        this.executors=executors;
-        executors.diskIO().execute(()->{
-            allTask = this.taskDao.getAllTask();
-        });
-
+    private    TaskRepository(Application application) {
+        this.taskDao = TestDB.getInstance(application).getTaskDao();
+        executors=AppExecutors.getInstance();
+        allTask=taskDao.getAllTask();
     }
-
-    public static TaskRepository getInstance(TaskDao taskDao, AppExecutors executors){
+    public static TaskRepository getInstance(Application application){
         if (instance ==null){
             synchronized (LOCK){
-                instance=new TaskRepository(taskDao, executors);
+                instance=new TaskRepository(application);
                 return instance;
             }
         }
@@ -40,6 +38,8 @@ public class TaskRepository {
     }
 
     public LiveData<List<Task>> getAllTask() {
+
+        Log.d(getClass().getName(), "Created");
         return allTask;
     }
 
@@ -56,6 +56,12 @@ public class TaskRepository {
         });
         return task;
     }
+
+    public int count(){
+        return allTask.getValue().size();
+    }
+
+
 
 
 }

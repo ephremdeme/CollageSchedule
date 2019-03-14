@@ -12,14 +12,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ClassViewModel extends ViewModel {
+public class ClassViewModel extends AndroidViewModel {
 
     ClassRepository repository;
     LiveData<ClassEntry> classEntryLiveData;
     LiveData<List<ClassEntry>> mAllClass;
 
-    public ClassViewModel(ClassRepository repository) {
-        this.repository = repository;
+    public ClassViewModel(Application application) {
+        super(application);
+        this.repository = ClassRepository.getInstance(application);
         mAllClass=repository.getAllWords();
     }
 
