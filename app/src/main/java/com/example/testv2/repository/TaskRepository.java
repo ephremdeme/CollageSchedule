@@ -51,10 +51,7 @@ public class TaskRepository {
     }
 
     public LiveData<Task> getTaskById(int id){
-        executors.diskIO().execute(()->{
-           task=taskDao.getTaskById(id);
-        });
-        return task;
+        return taskDao.getTaskById(id);
     }
 
     public int count(){
