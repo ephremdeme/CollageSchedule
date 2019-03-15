@@ -49,13 +49,11 @@ public class TestV2 extends Fragment {
 
 
         TaskViewModel viewModel= ViewModelProviders.of(this).get(TaskViewModel.class);
-        System.out.println(viewModel.repository.getAllTask()+"from view");
 
         viewModel.getAllTask().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
                 adapter.setAllTask(tasks);
-                System.out.println(tasks.size() +"from ob");
             }
         });
 

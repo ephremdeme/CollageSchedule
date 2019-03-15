@@ -49,4 +49,7 @@ public class ClassRepository {
     }
 
 
+    public LiveData<ClassEntry> getClassById(int id) {
+        return classDao.findById(id);
+    }
 }

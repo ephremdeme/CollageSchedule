@@ -30,11 +30,21 @@ public class DetailActivity extends AppCompatActivity {
         Fragment fragment=Task_Detail.newInstanc();
         fragment.setArguments(bundle);
 
+        Fragment classFragment=ClassDetail.newInstance();
+        classFragment.setArguments(bundle);
+
         FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().
-                replace(R.id.fragment_container, fragment )
-                .addToBackStack(null)
-                .commit();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        System.out.println(getIntent().getAction());
+        if (getIntent().getAction().equals("CLASS")){
+            transaction.replace(R.id.fragment_container, classFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }else{
+            transaction.replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
