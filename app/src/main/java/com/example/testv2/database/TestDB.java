@@ -38,7 +38,7 @@ public abstract class TestDB extends RoomDatabase {
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    new PopulateDbAsync(testV1).execute();
+
                 }
 
                 @Override
@@ -64,11 +64,7 @@ public abstract class TestDB extends RoomDatabase {
     @Override
     protected Void doInBackground(final Void... params) {
 
-        Task classEntry=new Task("subject1", 2, "subject detail", null, null);
-        taskDao.insert(classEntry);
-        classEntry=new Task("subject1", 2, "subject detail", null, null);
-        taskDao.insert(classEntry);
-        System.out.println("success inserting ");
+        taskDao.deleteAll();
         return null;
     }
 }

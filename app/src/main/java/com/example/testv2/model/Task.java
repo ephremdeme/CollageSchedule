@@ -17,6 +17,13 @@ public class Task {
     private Date dueDate;
 
     @Ignore
+    public Task() {
+    }
+
+
+
+
+    @Ignore
     public Task(String subject, int progress, String detail, String type, Date dueDate) {
         this.subject = subject;
         this.progress = progress;
