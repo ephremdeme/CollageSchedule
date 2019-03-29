@@ -47,6 +47,7 @@
                         android:src="@drawable/ic_event_black_24dp" />
 
                     <TextView
+                        android:id="@+id/classCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -86,9 +87,11 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_event_black_24dp" />
+                        android:background="#989898"
+                        android:src="@drawable/ic_done_black_24dp" />
 
                     <TextView
+                        android:id="@+id/taskCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
