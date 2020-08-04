@@ -1,8 +1,10 @@
-# CollageSchedule
+## CollageSchedule
 
-> ### University students class , assignment and event notifier.  
->Based on JetPack Architecture patterns includes:-.  
-            - Room Database.
-            - ViewModel.
-            - Fragment + ViewModel integration.
-            - Repository.
+> ### University student's class, assignment and event notifier Android App
+>
+>Based on JetPack Architecture patterns includes:-
+>
+>> - Room Database
+>> - ViewModel
+>> - Fragment + ViewModel integration
+>> - Repository
